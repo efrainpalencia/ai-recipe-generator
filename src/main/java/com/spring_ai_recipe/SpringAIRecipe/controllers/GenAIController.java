@@ -1,5 +1,7 @@
-package com.spring_ai_recipe.SpringAIRecipe;
+package com.spring_ai_recipe.SpringAIRecipe.controllers;
 
+import com.spring_ai_recipe.SpringAIRecipe.services.RecipeService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

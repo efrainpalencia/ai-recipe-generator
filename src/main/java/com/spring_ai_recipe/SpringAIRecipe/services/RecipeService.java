@@ -1,4 +1,4 @@
-package com.spring_ai_recipe.SpringAIRecipe;
+package com.spring_ai_recipe.SpringAIRecipe.services;
 
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.prompt.Prompt;
