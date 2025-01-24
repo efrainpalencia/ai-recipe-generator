@@ -5,5 +5,6 @@ load_dotenv()
 
 
 class Config:
-    OPENAI_SERVICE_URL = os.getenv(
-        "OPENAI_SERVICE_URL", "http://localhost:5005")
+    RECIPE_SERVICE_URL = os.getenv("RECIPE_SERVICE_URL")
+    OPENAI_SERVICE_URL = os.getenv("OPENAI_SERVICE_URL")
+    AUTH_SERVICE_URL = os.getenv("AUTH_SERVICE_URL")

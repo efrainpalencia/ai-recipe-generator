@@ -1,8 +1,9 @@
 import requests
 from flask import Flask, request, jsonify
-from config import OPENAI_SERVICE_URL  # ✅ OpenAI Microservice URL
+from config import Config  # ✅ OpenAI Microservice URL
 
 app = Flask(__name__)
+OPENAI_SERVICE_URL = Config.OPENAI_SERVICE_URL
 
 
 def fetch_ai_recipe(ingredients, preferences=""):
@@ -14,7 +15,7 @@ def fetch_ai_recipe(ingredients, preferences=""):
     return response.json() if response.status_code == 200 else None
 
 
-@app.route("/recipe", methods=["POST"])
+@app.route("/generate-recipe", methods=["POST"])  # ✅ Fixed route name
 def generate_recipe():
     """Handles user requests and fetches AI-generated recipes."""
     token = request.headers.get("Authorization")
@@ -37,4 +38,5 @@ def generate_recipe():
 
 
 if __name__ == "__main__":
+    print("🚀 Recipe Service is running on port 5002")
     app.run(port=5002, debug=True)  # ✅ Recipe Microservice runs separately

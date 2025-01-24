@@ -33,20 +33,25 @@ def login():
     return forward_request(AUTH_SERVICE_URL, "/login", "POST", request.json)
 
 
-@app.route("/api/recipe", methods=["POST"])
+@app.route("/api/generate-recipe", methods=["POST"])
 def generate_recipe():
     """Verifies JWT, then forwards recipe requests to the Recipe Service."""
     token = request.headers.get("Authorization")
     if not token:
         return jsonify({"error": "Token is missing!"}), 401
 
-    # Verify JWT via Authentication Service
+    token_value = token.split("Bearer ")[-1]  # Extract the actual token
+
+    # ✅ Verify JWT via Authentication Service
     auth_response = requests.post(
-        f"{AUTH_SERVICE_URL}/verify-token", json={"token": token})
+        f"{AUTH_SERVICE_URL}/verify-token", json={"token": token_value}
+    )
+
     if auth_response.status_code != 200:
         return jsonify({"error": "Invalid token!"}), 401
 
-    return forward_request(RECIPE_SERVICE_URL, "/recipe", "POST", request.json, request.headers)
+    # ✅ Forward request to the correct endpoint in the Recipe Service
+    return forward_request(RECIPE_SERVICE_URL, "/generate-recipe", "POST", request.json, request.headers)
 
 
 @app.route("/api/nutrition-info", methods=["GET"])
@@ -56,4 +61,5 @@ def get_nutrition_info():
 
 
 if __name__ == "__main__":
+    print("🚀 API Gateway is running on port 8080")
     app.run(port=8080, debug=True)  # ✅ API Gateway runs on port 8080

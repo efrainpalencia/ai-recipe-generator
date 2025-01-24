@@ -25,7 +25,7 @@ def register():
     }
     user_id = create_user(user_data)
 
-    return jsonify({"message": "User registered successfully", "user_id": user_id}), 201
+    return jsonify({"message": "User registered successfully", "user_id": str(user_id)}), 201
 
 
 @auth_routes.route("/login", methods=["POST"])
@@ -34,12 +34,12 @@ def login():
     data = request.json
     user = get_user_by_email(data["email"])
 
-    if not user or not check_password_hash(user.password_hash, data["password"]):
+    if not user or not check_password_hash(user["password_hash"], data["password"]):
         return jsonify({"error": "Invalid credentials"}), 401
 
     token = jwt.encode(
-        {"user_id": user.id, "exp": datetime.datetime.utcnow() +
-         datetime.timedelta(hours=24)},
+        {"user_id": str(user["_id"]), "exp": datetime.datetime.utcnow(
+        ) + datetime.timedelta(hours=24)},
         Config.JWT_SECRET,
         algorithm="HS256"
     )

@@ -7,21 +7,31 @@ recipe_routes = Blueprint("recipe_routes", __name__)
 
 def verify_token(token):
     """Calls the Authentication Service to validate JWT tokens."""
-    response = requests.post(
-        f"{Config.AUTH_SERVICE_URL}/verify-token", json={"token": token})
-    return response.json() if response.status_code == 200 else None
+    try:
+        response = requests.post(
+            f"{Config.AUTH_SERVICE_URL}/verify-token", json={"token": token})
+        if response.status_code == 200:
+            return response.json()
+    except requests.RequestException as e:
+        return None
+    return None
 
 
 def fetch_ai_recipe(ingredients, preferences=""):
     """Calls the OpenAI Microservice to generate a recipe."""
-    response = requests.post(
-        f"{Config.OPENAI_SERVICE_URL}/generate-recipe",
-        json={"ingredients": ingredients, "preferences": preferences}
-    )
-    return response.json() if response.status_code == 200 else None
+    try:
+        response = requests.post(
+            f"{Config.OPENAI_SERVICE_URL}/generate-recipe",
+            json={"ingredients": ingredients, "preferences": preferences}
+        )
+        if response.status_code == 200:
+            return response.json()
+    except requests.RequestException as e:
+        return None
+    return None
 
 
-@recipe_routes.route("/recipe", methods=["POST"])
+@recipe_routes.route("/generate-recipe", methods=["POST"])  # ✅ Fixed route
 def generate_recipe():
     """Handles user requests and fetches AI-generated recipes."""
     token = request.headers.get("Authorization")
