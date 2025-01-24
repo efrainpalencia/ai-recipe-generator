@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  auth_service:
+    build: ./auth_service
+    env_file: ./auth_service/.env
+    ports:
+      - "5001:5001"
+
+  recipe_service:
+    build: ./recipe_service
+    env_file: ./recipe_service/.env
+    ports:
+      - "5002:5002"
+    depends_on:
+      - auth_service
+      - openai_service
+
+  openai_service:
+    build: ./openai_service
+    env_file: ./openai_service/.env
+    ports:
+      - "5005:5005"

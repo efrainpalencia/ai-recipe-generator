@@ -5,5 +5,5 @@ load_dotenv()
 
 
 class Config:
-    MONGO_URI = os.getenv("MONGO_URI")
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+    OPENAI_SERVICE_PORT = int(os.getenv("OPENAI_SERVICE_PORT", 5005))
