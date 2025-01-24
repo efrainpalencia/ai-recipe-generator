@@ -1,6 +1,17 @@
 version: "3.8"
 
 services:
+  api_gateway:
+    build: ./api_gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auth_service
+      - recipe_service
+      - openai_service
+      - nutrition_service
+    env_file: ./api_gateway/.env
+
   auth_service:
     build: ./auth_service
     env_file: ./auth_service/.env
@@ -12,12 +23,15 @@ services:
     env_file: ./recipe_service/.env
     ports:
       - "5002:5002"
-    depends_on:
-      - auth_service
-      - openai_service
 
   openai_service:
     build: ./openai_service
     env_file: ./openai_service/.env
     ports:
       - "5005:5005"
+
+  nutrition_service:
+    build: ./nutrition_service
+    env_file: ./nutrition_service/.env
+    ports:
+      - "5003:5003"
