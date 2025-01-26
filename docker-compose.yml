@@ -9,7 +9,6 @@ services:
       - auth_service
       - recipe_service
       - openai_service
-      - nutrition_service
     env_file: ./api_gateway/.env
 
   auth_service:
@@ -27,11 +26,5 @@ services:
   openai_service:
     build: ./openai_service
     env_file: ./openai_service/.env
-    ports:
-      - "5005:5005"
-
-  nutrition_service:
-    build: ./nutrition_service
-    env_file: ./nutrition_service/.env
     ports:
       - "5003:5003"

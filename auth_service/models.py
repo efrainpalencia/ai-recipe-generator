@@ -24,13 +24,11 @@ class User:
     Represents a user in the system.
     """
 
-    def __init__(self, name, email, password_hash, phone_number, carrier, user_id=None):
+    def __init__(self, name, email, password_hash, user_id=None):
         self._id = ObjectId(user_id) if user_id else None
         self.name = name
         self.email = email
         self.password_hash = password_hash
-        self.phone_number = phone_number
-        self.carrier = carrier
 
     def to_dict(self):
         """Converts the User object to a dictionary."""
@@ -39,8 +37,6 @@ class User:
             "name": self.name,
             "email": self.email,
             "password_hash": self.password_hash,
-            "phone_number": self.phone_number,
-            "carrier": self.carrier
         }
 
 
@@ -57,10 +53,3 @@ def create_user(user_data):
 def get_user_by_email(email):
     """Retrieves a user by email."""
     return mongo.db.users.find_one({"email": email})
-
-
-def get_user_contact_info(user_id):
-    """Retrieves a user's phone number and carrier based on user ID."""
-    user = mongo.db.users.find_one({"_id": ObjectId(user_id)}, {
-                                   "phone_number": 1, "carrier": 1})
-    return user if user else None

@@ -11,13 +11,11 @@ load_dotenv()
 #     RECIPE_SERVICE_URL = os.getenv(
 #         "RECIPE_SERVICE_URL", "http://localhost:5002")
 #     OPENAI_SERVICE_URL = os.getenv(
-#         "OPENAI_SERVICE_URL", "http://localhost:5005")
-#     NUTRITION_SERVICE_URL = os.getenv(
-#         "NUTRITION_SERVICE_URL", "http://localhost:5003")
+#         "OPENAI_SERVICE_URL", "http://localhost:5003")
 
 
 class Config:
     # When running without Docker, use localhost
     AUTH_SERVICE_URL = "http://localhost:5001"
     RECIPE_SERVICE_URL = "http://localhost:5002"
-    OPENAI_SERVICE_URL = "http://localhost:5005"
+    OPENAI_SERVICE_URL = "http://localhost:5003"

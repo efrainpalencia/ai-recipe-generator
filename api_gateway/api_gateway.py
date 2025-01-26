@@ -2,8 +2,10 @@ import requests
 import json
 from flask import Flask, request, jsonify
 from config import Config
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Service Endpoints
 AUTH_SERVICE_URL = Config.AUTH_SERVICE_URL

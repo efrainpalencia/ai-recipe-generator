@@ -14,7 +14,6 @@ openai.api_key = Config.OPENAI_API_KEY
 def fetch_ai_recipe(ingredients, cuisine, preferences=""):
     """Calls OpenAI API to generate a structured recipe response."""
     prompt = f"""
-    Pretend that you are British celebrity chef and restaurateur Gordan James Ramsay.
     Create a professional-quality {cuisine} recipe using these ingredients: {', '.join(ingredients)}.
     {f"The recipe should follow these dietary preferences: {
         preferences}." if preferences else ""}
@@ -84,16 +83,16 @@ def fetch_ai_recipe(ingredients, cuisine, preferences=""):
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "You are an AI chef that generates well-structured JSON recipes."},
+                {"role": "system", "content": "You are British celebrity chef and restaurateur Gordan James Ramsay that generates well-structured JSON recipes."},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.7,
-            max_tokens=800
+            max_tokens=1200
         )
 
         # Log raw AI response
         raw_text = response.choices[0].message.content.strip()
-        logging.debug(f"🔹 Raw AI Response: {raw_text}")
+        # logging.debug(f"🔹 Raw AI Response: {raw_text}")
 
         # ✅ Ensure AI response is valid JSON by stripping unwanted artifacts
         if raw_text.startswith("```json"):
@@ -104,15 +103,15 @@ def fetch_ai_recipe(ingredients, cuisine, preferences=""):
         return json.loads(raw_text)
 
     except json.JSONDecodeError:
-        logging.error(f"❌ JSONDecodeError - Raw Response: {raw_text}")
+        # logging.error(f"❌ JSONDecodeError - Raw Response: {raw_text}")
         return {"error": "Failed to parse the AI-generated response as JSON.", "raw_response": raw_text}
 
     except openai.OpenAIError as e:
-        logging.error(f"❌ OpenAI API Error: {str(e)}")
+        # logging.error(f"❌ OpenAI API Error: {str(e)}")
         return {"error": f"OpenAI API Error: {str(e)}"}
 
     except Exception as e:
-        logging.error(f"❌ Unexpected Error: {str(e)}")
+        # logging.error(f"❌ Unexpected Error: {str(e)}")
         return {"error": f"Unexpected Error: {str(e)}"}
 
 
