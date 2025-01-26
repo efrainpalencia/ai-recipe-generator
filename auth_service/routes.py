@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 import jwt
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import create_user, get_user_by_email
+from models import create_user, get_user_by_email, get_user_contact_info
 from config import Config
 
 auth_routes = Blueprint("auth_routes", __name__)
@@ -21,6 +21,8 @@ def register():
     user_data = {
         "name": data["name"],
         "email": data["email"],
+        "phone_number": data["phone_number"],
+        "carrier": data["carrier"],
         "password_hash": generate_password_hash(data["password"]),
     }
     user_id = create_user(user_data)
@@ -64,3 +66,17 @@ def verify_token():
         return jsonify({"error": "Token has expired!"}), 401
     except jwt.InvalidTokenError:
         return jsonify({"error": "Invalid token!"}), 401
+
+
+@auth_routes.route("/get-user-contact", methods=["GET"])
+def get_user_contact():
+    """Fetches the user's phone number and carrier for SMS notifications."""
+    user_id = request.args.get("user_id")
+    if not user_id:
+        return jsonify({"error": "User ID is required"}), 400
+
+    user_info = get_user_contact_info(user_id)
+    if not user_info:
+        return jsonify({"error": "User not found"}), 404
+
+    return jsonify(user_info), 200
