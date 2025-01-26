@@ -1,3 +1,9 @@
-backend/venv
-*.env
-backend/.env
+# Ignore venv files
+venv
+
+# Ignore environment files
+auth_service/.env
+recipe_service/.env
+openai_service/.env
+nutrition_service/.env
+shopping_service/.env

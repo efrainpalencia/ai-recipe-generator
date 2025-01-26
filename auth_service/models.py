@@ -2,7 +2,7 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from config import Config
 
-# Initialize MongoDB
+# ✅ Initialize MongoDB
 mongo = PyMongo()
 
 
@@ -34,7 +34,7 @@ class User:
     def to_dict(self):
         """Converts the User object to a dictionary."""
         return {
-            "_id": str(self._id),
+            "_id": str(self._id) if self._id else None,
             "name": self.name,
             "email": self.email,
             "password_hash": self.password_hash,
@@ -59,7 +59,7 @@ class Recipe:
     def to_dict(self):
         """Converts the Recipe object to a dictionary."""
         return {
-            "_id": str(self._id),
+            "_id": str(self._id) if self._id else None,
             "title": self.title,
             "ingredients": self.ingredients,
             "instructions": self.instructions,
@@ -83,7 +83,7 @@ class ShoppingList:
     def to_dict(self):
         """Converts the ShoppingList object to a dictionary."""
         return {
-            "_id": str(self._id),
+            "_id": str(self._id) if self._id else None,
             "user_id": str(self.user_id),
             "recipe_id": str(self.recipe_id),
             "items": self.items
@@ -106,7 +106,7 @@ class NutritionData:
     def to_dict(self):
         """Converts the NutritionData object to a dictionary."""
         return {
-            "_id": str(self._id),
+            "_id": str(self._id) if self._id else None,
             "ingredient": self.ingredient,
             "calories": self.calories,
             "protein": self.protein,
@@ -121,43 +121,46 @@ class NutritionData:
 
 def create_user(user_data):
     """Inserts a new user into the database."""
-    return mongo.db.users.insert_one(user_data).inserted_id
+    return str(mongo.db.users.insert_one(user_data).inserted_id)
 
 
 def get_user_by_email(email):
     """Retrieves a user by email."""
     return mongo.db.users.find_one({"email": email})
 
+
 # 🟢 Recipe Operations
 
 
 def create_recipe(recipe_data):
     """Inserts a new recipe into the database."""
-    return mongo.db.recipes.insert_one(recipe_data).inserted_id
+    return str(mongo.db.recipes.insert_one(recipe_data).inserted_id)
 
 
 def get_recipe_by_id(recipe_id):
     """Retrieves a recipe by its ObjectId."""
     return mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
 
+
 # 🟢 Shopping List Operations
 
 
 def create_shopping_list(list_data):
     """Inserts a new shopping list into the database."""
-    return mongo.db.shopping_lists.insert_one(list_data).inserted_id
+    return str(mongo.db.shopping_lists.insert_one(list_data).inserted_id)
 
 
 def get_shopping_list_by_user(user_id):
     """Retrieves a shopping list by user ID."""
     return mongo.db.shopping_lists.find_one({"user_id": ObjectId(user_id)})
 
+
 # 🟢 Nutrition Data Operations
 
 
 def store_nutrition_data(nutrition_data):
     """Inserts nutrition data into the database."""
-    return mongo.db.nutrition_data.insert_one(nutrition_data).inserted_id
+    return str(mongo.db.nutrition_data.insert_one(nutrition_data).inserted_id)
 
 
 def get_nutrition_by_ingredient(ingredient):

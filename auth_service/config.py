@@ -6,4 +6,5 @@ load_dotenv()
 
 class Config:
     MONGO_URI = os.getenv("MONGO_URI")
-    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+    JWT_SECRET = os.getenv("JWT_SECRET")
+    AUTH_SERVICE_PORT = int(os.getenv("AUTH_SERVICE_PORT", 5001))
