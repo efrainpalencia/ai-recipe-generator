@@ -5,5 +5,4 @@ venv
 auth_service/.env
 recipe_service/.env
 openai_service/.env
-nutrition_service/.env
-shopping_service/.env
+api_gateway/.env
