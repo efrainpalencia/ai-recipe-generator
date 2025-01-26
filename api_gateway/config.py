@@ -21,4 +21,3 @@ class Config:
     AUTH_SERVICE_URL = "http://localhost:5001"
     RECIPE_SERVICE_URL = "http://localhost:5002"
     OPENAI_SERVICE_URL = "http://localhost:5005"
-    NUTRITION_SERVICE_URL = "http://localhost:5003"

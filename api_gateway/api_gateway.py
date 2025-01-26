@@ -1,4 +1,5 @@
 import requests
+import json
 from flask import Flask, request, jsonify
 from config import Config
 
@@ -8,15 +9,19 @@ app = Flask(__name__)
 AUTH_SERVICE_URL = Config.AUTH_SERVICE_URL
 RECIPE_SERVICE_URL = Config.RECIPE_SERVICE_URL
 OPENAI_SERVICE_URL = Config.OPENAI_SERVICE_URL
-NUTRITION_SERVICE_URL = Config.NUTRITION_SERVICE_URL
 
 
 def forward_request(service_url, path, method="GET", data=None, headers=None):
-    """Forwards requests to the appropriate microservice."""
+    """Forwards requests to the appropriate microservice while preserving JSON order."""
     url = f"{service_url}{path}"
     try:
         response = requests.request(method, url, json=data, headers=headers)
-        return jsonify(response.json()), response.status_code
+        response_data = response.json()
+
+        # ✅ Preserve JSON order
+        ordered_response = json.dumps(response_data, indent=4, sort_keys=False)
+        return app.response_class(response=ordered_response, status=response.status_code, mimetype="application/json")
+
     except requests.RequestException as e:
         return jsonify({"error": f"Service Unavailable: {str(e)}"}), 503
 
@@ -52,12 +57,6 @@ def generate_recipe():
 
     # ✅ Forward request to the correct endpoint in the Recipe Service
     return forward_request(RECIPE_SERVICE_URL, "/generate-recipe", "POST", request.json, request.headers)
-
-
-@app.route("/api/nutrition-info", methods=["GET"])
-def get_nutrition_info():
-    """Forwards nutrition data requests to the Nutrition Service."""
-    return forward_request(NUTRITION_SERVICE_URL, "/nutrition-info", "GET", request.args, request.headers)
 
 
 if __name__ == "__main__":
