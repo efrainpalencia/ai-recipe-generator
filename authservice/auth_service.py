@@ -1,17 +1,14 @@
 from flask import Flask
-from flask_pymongo import PyMongo
+from pymongo import MongoClient
 from routes import auth_routes
-from models import init_db
 from config import Config
 
 # ✅ Initialize Flask App
 app = Flask(__name__)
 
-# ✅ Set MongoDB Config
-app.config["MONGO_URI"] = Config.MONGO_URI
-
-# ✅ Initialize Database
-init_db(app)
+# ✅ Initialize MongoDB Client with Database Name
+client = MongoClient(Config.MONGO_URL)
+db = client[Config.MONGO_DB_NAME]  # ✅ Explicitly define the database
 
 # ✅ Register authentication routes
 app.register_blueprint(auth_routes)

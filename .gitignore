@@ -2,7 +2,7 @@
 venv
 
 # Ignore environment files
-auth_service/.env
-recipe_service/.env
-openai_service/.env
-api_gateway/.env
+authservice/.env
+recipeservice/.env
+openaiservice/.env
+apigateway/.env

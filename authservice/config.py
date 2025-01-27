@@ -5,6 +5,7 @@ load_dotenv()
 
 
 class Config:
-    MONGO_URI = os.getenv("MONGO_URI")
+    MONGO_URL = os.getenv("MONGO_URL")
+    MONGO_DB_NAME = os.getenv("MONGO_DB_NAME", "auth_db")
     JWT_SECRET = os.getenv("JWT_SECRET")
     AUTH_SERVICE_PORT = int(os.getenv("AUTH_SERVICE_PORT", 5001))

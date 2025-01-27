@@ -15,8 +15,8 @@ def fetch_ai_recipe(ingredients, cuisine, preferences=""):
     """Calls OpenAI API to generate a structured recipe response."""
     prompt = f"""
     Create a professional-quality {cuisine} recipe using these ingredients: {', '.join(ingredients)}.
-    {f"The recipe should follow these dietary preferences: {
-        preferences}." if preferences else ""}
+    {"The recipe should follow these dietary preferences: " +
+        preferences + "." if preferences else ""}
 
     Ensure the response is **valid JSON**, without Markdown formatting.
 
@@ -30,52 +30,6 @@ def fetch_ai_recipe(ingredients, cuisine, preferences=""):
 
     Additionally, include a **total nutrition summary** for the entire recipe. Make sure to use
     accurate information from a trusted source such as https://www.nutrition.gov/.
-
-    Expected JSON Output:
-    {{
-        "title": "Garlic Pepper Chicken Skillet",
-        "cuisine": "{cuisine}",
-        "servings": 2,
-        "prep_time": "10 minutes",
-        "cook_time": "15 minutes",
-        "ingredients": [
-            {{
-                "name": "Chicken Breast",
-                "quantity": "2 boneless, skinless breasts",
-                "calories": 165,
-                "protein": 31,
-                "fat": 3.6,
-                "carbs": 0
-            }},
-            {{
-                "name": "Garlic",
-                "quantity": "4 cloves",
-                "calories": 18,
-                "protein": 0.8,
-                "fat": 0.1,
-                "carbs": 4
-            }},
-            {{
-                "name": "Olive Oil",
-                "quantity": "2 tablespoons",
-                "calories": 240,
-                "protein": 0,
-                "fat": 27,
-                "carbs": 0
-            }}
-        ],
-        "instructions": [
-            "Step 1: Heat olive oil in a skillet.",
-            "Step 2: Add garlic and sauté until fragrant.",
-            "Step 3: Add chicken and cook until golden brown."
-        ],
-        "total_nutrition": {{
-            "calories": 423,
-            "protein": 31.8,
-            "fat": 30.7,
-            "carbs": 4
-        }}
-    }}
     """
 
     try:

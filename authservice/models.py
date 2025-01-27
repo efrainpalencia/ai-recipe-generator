@@ -1,20 +1,13 @@
-from flask_pymongo import PyMongo
+from pymongo import MongoClient
 from bson.objectid import ObjectId
 from config import Config
 
-# ✅ Initialize MongoDB
-mongo = PyMongo()
+# ✅ Initialize MongoDB Client with Railway's MONGO_URL
+client = MongoClient(Config.MONGO_URL)
 
-
-def init_db(app):
-    """
-    Initializes the MongoDB database with the Flask application.
-
-    Args:
-        app (Flask): The Flask application instance.
-    """
-    app.config["MONGO_URI"] = Config.MONGO_URI  # ✅ Uses config-based URI
-    mongo.init_app(app)
+# ✅ Explicitly specify the database name
+db_name = Config.MONGO_DB_NAME
+db = client[db_name]  # ✅ Explicitly accessing the database
 
 # ============================ MODELS ============================
 
@@ -44,12 +37,11 @@ class User:
 
 # 🟢 User Operations
 
-
 def create_user(user_data):
     """Inserts a new user into the database."""
-    return str(mongo.db.users.insert_one(user_data).inserted_id)
+    return str(db.users.insert_one(user_data).inserted_id)  # ✅ Uses correct DB reference
 
 
 def get_user_by_email(email):
     """Retrieves a user by email."""
-    return mongo.db.users.find_one({"email": email})
+    return db.users.find_one({"email": email})  # ✅ Uses correct DB reference
