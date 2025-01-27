@@ -22,3 +22,6 @@ class Config:
 
     # ✅ OpenAI API Key
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "your_openai_api_key_here")
+
+    # ✅ Debug Mode
+    FLASK_DEBUG = os.getenv("FLASK_DEBUG")
