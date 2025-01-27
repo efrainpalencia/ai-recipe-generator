@@ -1,9 +1,13 @@
+import os
 import requests
 import json
 from flask import Flask, request, jsonify
 from config import Config
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
+FLASK_DEBUG = os.getenv("FLASK_DEBUG")
 
 # Service Endpoints
 AUTH_SERVICE_URL = Config.AUTH_SERVICE_URL
@@ -61,4 +65,5 @@ def generate_recipe():
 
 if __name__ == "__main__":
     print("🚀 API Gateway is running on port 8080")
-    app.run(port=8080, debug=True)  # ✅ API Gateway runs on port 8080
+    # ✅ API Gateway runs on port 8080
+    app.run(host="0.0.0.0", port=8080, debug={FLASK_DEBUG})
