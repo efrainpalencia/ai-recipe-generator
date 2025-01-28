@@ -18,16 +18,16 @@ Alternatively, run each service manually:
 
 ```bash
 # API Gateway
-cd api_gateway && python api_gateway.py
+cd apigateway && python api_gateway.py
 
 # Authentication Service
-cd auth_service && python auth_service.py
+cd authservice && python auth_service.py
 
 # Recipe Service
-cd recipe_service && python recipe_service.py
+cd recipeservice && python recipe_service.py
 
 # OpenAI Service
-cd openai_service && python openai_service.py
+cd openaiservice && python openai_service.py
 ```
 
 ---
