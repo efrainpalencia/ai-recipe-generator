@@ -1,17 +1,20 @@
 # Use official Python image
 FROM python:3.11
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy application files
-COPY . .
+# Copy dependencies first for better caching
+COPY requirements.txt .
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the service port
-EXPOSE 8080
+# Copy application code
+COPY . .
 
-# Command to run the application
-CMD ["python", "api_gateway.py"]
+# Expose the necessary port (Railway dynamically assigns ports)
+EXPOSE ${PORT}
+
+# Use Gunicorn to run the application
+CMD ["gunicorn", "--bind", "[::]:${PORT-3000}", "app:app"]
