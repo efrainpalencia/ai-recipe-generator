@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme {
+
+
+    --color-lime-500: oklch(0.768 0.233 130.85);
+    --color-lime-700: oklch(0.532 0.157 131.589);
+
+    --color-slate-300: oklch(0.869 0.022 252.894);
+    --color-slate-500: oklch(0.554 0.046 257.417);
+    --color-slate-900: oklch(0.208 0.042 265.755);
+}

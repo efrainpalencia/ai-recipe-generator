@@ -1,156 +1,156 @@
-# 📌 AI Recipe Generator API Gateway
+# AI Chef: AI Recipe Generator
 
-This API Gateway centralizes routing for authentication, recipe generation, and OpenAI interactions. It forwards requests to the appropriate microservices.
+
+![logo](https://github.com/user-attachments/assets/ddda8110-8280-4455-8f77-65a508a28dc6)
+
+
+## 📌 Overview
+
+The **AI Recipe Generator** is a full-stack application that generates professional-quality recipes based on user-inputted ingredients, cuisine type, and dietary preferences. The application consists of:
+
+- **Backend**: A Flask-based API service using OpenAI to generate structured recipe responses.
+- **Frontend**: A React (Vite + TypeScript + Tailwind CSS) UI for user interaction.
+- **Deployment**: Hosted on **Railway**.
 
 ---
 
-## 🚀 Getting Started
+## 🛠 Installation Guide
 
-### 1️⃣ Run the Services
+### **1️⃣ Clone the Repository**
 
-#### Using **Docker Compose**:
+```sh
+ git clone https://github.com/yourusername/ai-recipe-generator.git
+ cd ai-recipe-generator
+```
 
-```bash
+### **2️⃣ Set Up the Backend**
+
+```sh
+ cd backend
+ python -m venv venv
+ source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+ pip install -r requirements.txt
+```
+
+#### **Configure Environment Variables**
+
+Create a `.env` file in the `backend` directory:
+
+```env
+OPENAI_API_KEY=your-openai-api-key
+FLASK_ENV=production
+FLASK_DEBUG=False
+```
+
+#### **Run the Backend Locally**
+
+```sh
+python app.py  # Or use `gunicorn -c gunicorn_config.py app:app` for production
+```
+
+---
+
+### **3️⃣ Set Up the Frontend**
+
+```sh
+ cd ../frontend
+ npm install  # Install dependencies
+```
+
+#### **Configure Frontend Environment Variables**
+
+Create a `.env` file in the `frontend` directory:
+
+```env
+VITE_API_BASE_URL=<enter_your_backend_url>
+```
+
+#### **Run the Frontend Locally**
+
+```sh
+npm run dev  # Runs the frontend on localhost
+```
+
+---
+
+## 🚀 Deployment Guide
+
+### **1️⃣ Docker Setup (Optional for Local Development)**
+
+```sh
 docker-compose up --build
 ```
 
-Alternatively, run each service manually:
+This will spin up both backend and frontend services.
 
-```bash
-# API Gateway
-cd api_gateway && python api_gateway.py
+### **2️⃣ Push Images to Docker Hub**
 
-# Authentication Service
-cd auth_service && python auth_service.py
+```sh
+docker tag backend your-dockerhub-username/backend:latest
+docker push your-dockerhub-username/backend:latest
 
-# Recipe Service
-cd recipe_service && python recipe_service.py
-
-# OpenAI Service
-cd openai_service && python openai_service.py
+docker tag frontend your-dockerhub-username/frontend:latest
+docker push your-dockerhub-username/frontend:latest
 ```
 
----
+### **3️⃣ Deploy on Railway**
 
-## 📌 API Endpoints
-
-### 🏷️ Authentication Service
-
-| Method   | Endpoint            | Description                            |
-| -------- | ------------------- | -------------------------------------- |
-| **POST** | `/api/register`     | Registers a new user                   |
-| **POST** | `/api/login`        | Logs in a user and returns a JWT token |
-| **POST** | `/api/verify-token` | Validates a JWT token                  |
-
-### 🥗 Recipe Service
-
-| Method   | Endpoint               | Description                                                       |
-| -------- | ---------------------- | ----------------------------------------------------------------- |
-| **POST** | `/api/generate-recipe` | Generates a recipe based on ingredients, cuisine, and preferences |
-
-🔹 **Request Body Example:**
-
-```json
-{
-  "ingredients": ["chicken", "garlic", "onion", "pepper"],
-  "cuisine": "Italian",
-  "preferences": "low-carb"
-}
-```
-
-🔹 **Response Example:**
-
-```json
-{
-  "title": "Garlic Pepper Chicken Skillet",
-  "servings": 2,
-  "prep_time": "10 minutes",
-  "cook_time": "15 minutes",
-  "ingredients": [
-    {
-      "name": "Chicken Breast",
-      "quantity": "2 boneless, skinless breasts",
-      "calories": 165,
-      "protein": 31,
-      "fat": 3.6,
-      "carbs": 0
-    }
-  ],
-  "instructions": [
-    "Step 1: Heat olive oil in a skillet.",
-    "Step 2: Add garlic and sauté until fragrant.",
-    "Step 3: Add chicken and cook until golden brown."
-  ],
-  "total_nutrition": {
-    "calories": 423,
-    "protein": 31.8,
-    "fat": 30.7,
-    "carbs": 4
-  }
-}
-```
+- **Backend**: Deploy on **Railway**, ensuring correct environment variables.
+- **Frontend**: Deploy on **Railway**, linking to the backend’s Railway domain.
 
 ---
 
-## 🔧 Environment Variables
+## 📖 User Guide
 
-Each microservice uses an `.env` file. Example `.env` configuration:
+### **🌟 How to Use the AI Recipe Generator**
 
-```ini
-# API Gateway
-AUTH_SERVICE_URL=http://auth_service:5001
-RECIPE_SERVICE_URL=http://recipe_service:5002
-OPENAI_SERVICE_URL=http://openai_service:5003
+1️⃣ **Enter Ingredients**: Type comma-separated ingredients (e.g., "chicken, garlic, onion").
 
-# Authentication Service
-MONGO_URI=mongodb://localhost:27017/auth_db
-JWT_SECRET=super_secret_key
-AUTH_SERVICE_PORT=5001
+2️⃣ **Select Cuisine**: Choose a cuisine (e.g., "Italian", "Mexican").
 
-# OpenAI Service
-OPENAI_API_KEY=your_openai_api_key
-```
+3️⃣ **Add Preferences (Optional)**: Specify dietary restrictions (e.g., "low-carb").
 
----
+4️⃣ **Generate Recipe**: Click **Generate Recipe** to receive a structured response.
 
-## 📌 CORS Configuration
+![input-recipe](https://github.com/user-attachments/assets/ff8c1e32-3fc6-4cf1-97a9-0c8b69904860)
 
-CORS has been enabled in `api_gateway.py` to allow frontend communication:
 
-```python
-from flask_cors import CORS
-CORS(app)
-```
+5️⃣ **View Recipe**: The generated recipe includes:
+
+- Recipe Title
+- Ingredients List with Quantities & Nutritional Facts
+- Step-by-Step Cooking Instructions
+- Total Nutrition Summary
+
+![recipe-results](https://github.com/user-attachments/assets/e6b16255-2b3a-4237-8e1e-41182b6e937c)
+
 
 ---
 
-## 🔥 Testing the API
+## 🛠 Troubleshooting
 
-You can test the API using **Postman** or **cURL**.
+### **Common Issues & Fixes**
 
-✅ **Example cURL Request:**
+1️⃣ **Mixed Content Error** (Frontend Not Connecting to Backend)
 
-```bash
-curl -X POST http://localhost:8080/api/generate-recipe \
-     -H "Content-Type: application/json" \
-     -H "Authorization: Bearer your_jwt_token" \
-     -d '{"ingredients": ["chicken", "garlic", "onion", "pepper"], "cuisine": "Mexican", "preferences": "low-carb"}'
-```
+- Ensure `VITE_API_BASE_URL` is set to the **correct HTTPS backend URL**.
+- Update Railway domain if necessary.
 
----
+2️⃣ **Backend Not Running on Railway**
 
-## 🚀 Next Steps
+- Check logs: `railway logs`
+- Restart service: `railway up`
 
-- 📌 **Frontend Integration**: Connect the API to a frontend React app.
-- 📌 **Deployment**: Deploy using **Docker** + **AWS**.
-- 📌 **Error Handling**: Improve validation and logging.
+3️⃣ **Docker Issues**
+
+- Run `docker-compose down` and rebuild with `docker-compose up --build`
 
 ---
 
-## 🎯 Contributors
+## 📞 Support
 
-Feel free to contribute by submitting a pull request or creating an issue.
+For any issues, open an **issue** on GitHub or contact the project maintainers.
 
 ---
 
-**🔹 Happy Cooking with AI!** 🍽️ 🚀
+🚀 **Enjoy Cooking with AI!** 🍽
