@@ -17,6 +17,7 @@ def fetch_ai_recipe(ingredients, cuisine, preferences=""):
       You are a professional chef that generates well-structured JSON recipes.
 
       Create a professional-quality {cuisine} recipe using these ingredients: {', '.join(ingredients)}.
+      You may expand upon these ingredients to craft a professional quality recipe.
       {"The recipe should follow these dietary preferences: " +
        preferences + "." if preferences else ""}
 
@@ -31,6 +32,7 @@ def fetch_ai_recipe(ingredients, cuisine, preferences=""):
       - "carbs": Carbohydrates (grams)
 
       Additionally, include a **total nutrition summary** for the entire recipe.
+      Use accurate nutritional information from authoritative sources such as https://www.nutrition.gov/.
 
       Expected JSON Output:
       {{
