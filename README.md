@@ -1,8 +1,6 @@
 # AI Chef: AI Recipe Generator
 
-
 ![logo](https://github.com/user-attachments/assets/ddda8110-8280-4455-8f77-65a508a28dc6)
-
 
 ## 📌 Overview
 
@@ -14,38 +12,30 @@ The **AI Recipe Generator** is a full-stack application that generates professio
 
 ---
 
-## 🛠 Installation Guide
+## 🚀 Getting Started
 
-### **1️⃣ Clone the Repository**
+### 1️⃣ Run the Services
 
-```sh
- git clone https://github.com/yourusername/ai-recipe-generator.git
- cd ai-recipe-generator
+#### Using **Docker Compose**:
+
+```bash
+docker-compose up --build
 ```
 
-### **2️⃣ Set Up the Backend**
+Alternatively, run each service manually:
 
-```sh
- cd backend
- python -m venv venv
- source venv/bin/activate  # On Windows use `venv\Scripts\activate`
- pip install -r requirements.txt
-```
+```bash
+# API Gateway
+cd apigateway && python api_gateway.py
 
-#### **Configure Environment Variables**
+# Authentication Service
+cd authservice && python auth_service.py
 
-Create a `.env` file in the `backend` directory:
+# Recipe Service
+cd recipeservice && python recipe_service.py
 
-```env
-OPENAI_API_KEY=your-openai-api-key
-FLASK_ENV=production
-FLASK_DEBUG=False
-```
-
-#### **Run the Backend Locally**
-
-```sh
-python app.py  # Or use `gunicorn -c gunicorn_config.py app:app` for production
+# OpenAI Service
+cd openaiservice && python openai_service.py
 ```
 
 ---
@@ -114,7 +104,6 @@ docker push your-dockerhub-username/frontend:latest
 
 ![input-recipe](https://github.com/user-attachments/assets/ff8c1e32-3fc6-4cf1-97a9-0c8b69904860)
 
-
 5️⃣ **View Recipe**: The generated recipe includes:
 
 - Recipe Title
@@ -123,7 +112,6 @@ docker push your-dockerhub-username/frontend:latest
 - Total Nutrition Summary
 
 ![recipe-results](https://github.com/user-attachments/assets/e6b16255-2b3a-4237-8e1e-41182b6e937c)
-
 
 ---
 
