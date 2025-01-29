@@ -1,7 +1,8 @@
 # AI Chef: AI Recipe Generator
 
 ```md
-![logo.png](https://github.com/efrainpalencia/ai-recipe-generator/blob/release-v1.2.1/docs/images/logo.png?raw=true)
+![image](https://github.com/user-attachments/assets/e9388537-ca61-41ce-851a-9d54f2ab7ed7)
+
 ```
 
 ## 📌 Overview
