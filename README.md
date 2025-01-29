@@ -1,7 +1,7 @@
 # AI Chef: AI Recipe Generator
 
 ```md
-![Recipe Generator UI](docs/images/logo.png)
+![Recipe Generator UI](logo.png)
 ```
 
 ## 📌 Overview
@@ -113,7 +113,7 @@ docker push your-dockerhub-username/frontend:latest
 4️⃣ **Generate Recipe**: Click **Generate Recipe** to receive a structured response.
 
 ```md
-![Recipe Generator UI](docs/images/input-recipe.jpeg)
+![Recipe Generator UI](input-recipe.jpeg)
 ```
 
 5️⃣ **View Recipe**: The generated recipe includes:
@@ -124,7 +124,7 @@ docker push your-dockerhub-username/frontend:latest
 - Total Nutrition Summary
 
 ```md
-![Recipe Generator UI](docs/images/recipe-results.jpeg)
+![Recipe Generator UI](recipe-results.jpeg)
 ```
 
 ---
