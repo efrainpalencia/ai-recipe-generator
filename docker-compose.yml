@@ -1,30 +1,14 @@
 version: "3.8"
 
 services:
-  apigateway:
-    build: ./apigateway
+  backend:
+    build: ./backend
     ports:
-      - "8080:8080"
-    depends_on:
-      - authservice
-      - recipeservice
-      - openaiservice
-    env_file: ./apigateway/.env
+      - "5000:5000"
+    env_file: ./backend/.env
 
-  authservice:
-    build: ./authservice
-    env_file: ./authservice/.env
+  frontend:
+    build: ./frontend
     ports:
-      - "5001:5001"
-
-  recipeservice:
-    build: ./recipeservice
-    env_file: ./recipeservice/.env
-    ports:
-      - "5002:5002"
-
-  openaiservice:
-    build: ./openaiservice
-    env_file: ./openaiservice/.env
-    ports:
-      - "5003:5003"
+      - "3000:3000"
+    env_file: ./frontend/.env
