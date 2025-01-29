@@ -1,8 +1,7 @@
 # AI Chef: AI Recipe Generator
 
 ```md
-![image](https://github.com/user-attachments/assets/e9388537-ca61-41ce-851a-9d54f2ab7ed7)
-
+![logo](https://github.com/user-attachments/assets/ddda8110-8280-4455-8f77-65a508a28dc6)
 ```
 
 ## 📌 Overview
