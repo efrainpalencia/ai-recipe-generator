@@ -12,57 +12,6 @@ The **AI Recipe Generator** is a full-stack application that generates professio
 
 ---
 
-## 🚀 Getting Started
-
-### 1️⃣ Run the Services
-
-#### Using **Docker Compose**:
-
-```bash
-docker-compose up --build
-```
-
-Alternatively, run each service manually:
-
-```bash
-# API Gateway
-cd apigateway && python api_gateway.py
-
-# Authentication Service
-cd authservice && python auth_service.py
-
-# Recipe Service
-cd recipeservice && python recipe_service.py
-
-# OpenAI Service
-cd openaiservice && python openai_service.py
-```
-
----
-
-### **3️⃣ Set Up the Frontend**
-
-```sh
- cd ../frontend
- npm install  # Install dependencies
-```
-
-#### **Configure Frontend Environment Variables**
-
-Create a `.env` file in the `frontend` directory:
-
-```env
-VITE_API_BASE_URL=<enter_your_backend_url>
-```
-
-#### **Run the Frontend Locally**
-
-```sh
-npm run dev  # Runs the frontend on localhost
-```
-
----
-
 ## 🚀 Deployment Guide
 
 ### **1️⃣ Docker Setup (Optional for Local Development)**
