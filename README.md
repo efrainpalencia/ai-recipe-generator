@@ -112,9 +112,8 @@ docker push your-dockerhub-username/frontend:latest
 
 4️⃣ **Generate Recipe**: Click **Generate Recipe** to receive a structured response.
 
-```md
-![Recipe Generator UI](input-recipe.jpeg)
-```
+![input-recipe](https://github.com/user-attachments/assets/ff8c1e32-3fc6-4cf1-97a9-0c8b69904860)
+
 
 5️⃣ **View Recipe**: The generated recipe includes:
 
@@ -123,9 +122,8 @@ docker push your-dockerhub-username/frontend:latest
 - Step-by-Step Cooking Instructions
 - Total Nutrition Summary
 
-```md
-![Recipe Generator UI](recipe-results.jpeg)
-```
+![recipe-results](https://github.com/user-attachments/assets/e6b16255-2b3a-4237-8e1e-41182b6e937c)
+
 
 ---
 
