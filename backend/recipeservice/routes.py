@@ -95,7 +95,7 @@ def fetch_ai_recipe(ingredients, cuisine, preferences=""):
 
         # Log raw AI response
         raw_text = response.choices[0].message.content.strip()
-        logging.debug(f"🔹 Raw AI Response: {raw_text}")
+        # logging.debug(f"🔹 Raw AI Response: {raw_text}")
 
         # ✅ Ensure AI response is valid JSON by stripping unwanted artifacts
         if raw_text.startswith("```json"):
