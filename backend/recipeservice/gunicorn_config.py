@@ -15,6 +15,9 @@ worker_class = "gthread"
 # ✅ Set request timeout to prevent long-running requests
 timeout = 120
 
+# ✅ Preload the application for faster startup
+preload_app = True
+
 # ✅ Enable access logging
 accesslog = "-"
 
@@ -23,3 +26,6 @@ errorlog = "-"
 
 # ✅ Set log level (options: debug, info, warning, error, critical)
 loglevel = "info"
+
+# ✅ Optional: Customize access log format
+access_log_format = '%(h)s %(l)s %(u)s [%(t)s] "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'

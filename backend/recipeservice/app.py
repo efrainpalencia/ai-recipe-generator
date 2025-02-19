@@ -7,11 +7,7 @@ from config import Config
 app = Flask(__name__)
 CORS(app)
 app.register_blueprint(recipe_routes)  # ✅ Register routes
-# ✅ Disable debug mode (Production)
-app.config["DEBUG"] = False
 
-if __name__ == "__main__":
-    print("🚀 Recipe Service is running on port 5000")
-    # ✅ Runs OpenAI Microservice separately
-    from gunicorn.app.wsgiapp import run
-    run()
+# Debug mode
+# if __name__ == "__main__":
+#     app.run(host="0.0.0.0", port=5000)
