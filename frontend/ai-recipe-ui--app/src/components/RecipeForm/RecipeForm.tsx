@@ -122,7 +122,7 @@ const RecipeForm = () => {
           value={servings}
           onChange={handleServingsChange}
         >
-          <option value="">--Please choose a Serving Size--</option>
+          <option value="">--Choose a Serving--</option>
           {servingsOptions.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
@@ -137,7 +137,7 @@ const RecipeForm = () => {
           value={cuisine}
           onChange={handleCuisineChange}
         >
-          <option value="">--Please choose a Cuisine--</option>
+          <option value="">--Choose a Cuisine--</option>
           {cuisineOptions.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
