@@ -7,17 +7,18 @@ from config import Config
 # Configure logging for debugging
 logging.basicConfig(level=logging.DEBUG)
 
-recipe_routes = Blueprint("recipe_routes", __name__)
+api = Blueprint("api", __name__)
 openai.api_key = Config.OPENAI_API_KEY
 
 
-def fetch_ai_recipe(ingredients, cuisine, preferences=""):
+def fetch_ai_recipe(ingredients, servings, cuisine, preferences=""):
     """Calls OpenAI API to generate a structured recipe response."""
     prompt = f"""
       You are a professional chef that generates well-structured JSON recipes.
 
       Create a professional-quality {cuisine} recipe using these ingredients: {', '.join(ingredients)}.
       You may expand upon these ingredients to craft a professional quality recipe.
+      Calculate the ingredients needed for {servings} servings.
       {"The recipe should follow these dietary preferences: " +
        preferences + "." if preferences else ""}
 
@@ -38,7 +39,7 @@ def fetch_ai_recipe(ingredients, cuisine, preferences=""):
       {{
           "title": "Garlic Pepper Chicken Skillet",
           "cuisine": "{cuisine}",
-          "servings": 2,
+          "servings": "{servings}",
           "prep_time": "10 minutes",
           "cook_time": "15 minutes",
           "ingredients": [
@@ -90,7 +91,7 @@ def fetch_ai_recipe(ingredients, cuisine, preferences=""):
                 {"role": "user", "content": prompt}
             ],
             temperature=0.7,
-            max_tokens=1200
+            max_tokens=1200,
         )
 
         # Log raw AI response
@@ -118,18 +119,19 @@ def fetch_ai_recipe(ingredients, cuisine, preferences=""):
         return {"error": f"Unexpected Error: {str(e)}"}
 
 
-@recipe_routes.route("/generate-recipe", methods=["POST"])
+@api.route("/generate-recipe", methods=["POST"])
 def generate_recipe():
     """Handles user requests and fetches AI-generated recipes."""
     data = request.json
     ingredients = data.get("ingredients", [])
-    cuisine = data.get("cuisine", "")
+    servings = data.get("servings", "4")
+    cuisine = data.get("cuisine", "any")
     preferences = data.get("preferences", "")
 
     if not ingredients:
         return jsonify({"error": "No ingredients provided"}), 400
 
-    recipe_data = fetch_ai_recipe(ingredients, cuisine, preferences)
+    recipe_data = fetch_ai_recipe(ingredients, servings, cuisine, preferences)
 
     if "error" in recipe_data:
         return jsonify(recipe_data), 500  # ✅ Handle API errors properly
