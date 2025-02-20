@@ -1,12 +1,15 @@
 from flask import Flask
 from flask_cors import CORS
-from routes import recipe_routes
-from config import Config
+from routes import api
 
 
 app = Flask(__name__)
-CORS(app)
-app.register_blueprint(recipe_routes)  # ✅ Register routes
+CORS(app, resources={
+     r"/api/*": {"origins": ["ai-recipe-generator.up.railway.app"]}})
+
+# Allow all origins or specify the frontend domain explicitly
+# CORS(app, resources={r"/api/*": {"origins": "*"}})
+app.register_blueprint(api, url_prefix="/api")  # ✅ Register routes
 
 # Debug mode
 # if __name__ == "__main__":

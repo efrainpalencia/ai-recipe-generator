@@ -1,13 +1,71 @@
 import { useState } from "react";
 import { fetchRecipe } from "../../api/index";
 
+interface CuisineOption {
+  value: string;
+  label: string;
+}
+const cuisineOptions: CuisineOption[] = [
+  { value: "any", label: "Any" },
+  { value: "american", label: "American" },
+  { value: "argentine", label: "Argentine" },
+  { value: "british", label: "British" },
+  { value: "congolese", label: "Congolese" },
+  { value: "chinese", label: "Chinese" },
+  { value: "cuban", label: "Cuban" },
+  { value: "dominicanRepublic", label: "Dominican Republic" },
+  { value: "dutch", label: "Dutch" },
+  { value: "ethiopian", label: "Ethiopian" },
+  { value: "french", label: "French" },
+  { value: "german", label: "German" },
+  { value: "greek", label: "Greek" },
+  { value: "indian", label: "Indian" },
+  { value: "japanese", label: "Japanese" },
+  { value: "mexican", label: "Mexican" },
+  { value: "middleEastern", label: "Middle Eastern" },
+  { value: "purtoRican", label: "Puerto Rican" },
+  { value: "somali", label: "Somali" },
+  { value: "spanish", label: "Spanish" },
+  { value: "swahili", label: "Swahili" },
+  { value: "tunisian", label: "Tunisian" },
+];
+
+interface ServingsOption {
+  value: string;
+  label: string;
+}
+
+const servingsOptions: ServingsOption[] = [
+  { value: "1", label: "1 Servings" },
+  { value: "2", label: "2 Servings" },
+  { value: "3", label: "3 Servings" },
+  { value: "4", label: "4 Servings" },
+  { value: "5", label: "5 Servings" },
+  { value: "6", label: "6 Servings" },
+  { value: "7", label: "7 Servings" },
+  { value: "8", label: "8 Servings" },
+  { value: "9", label: "9 Servings" },
+  { value: "10", label: "10 Servings" },
+];
+
 const RecipeForm = () => {
   const [ingredients, setIngredients] = useState("");
-  const [cuisine, setCuisine] = useState("");
+  const [servings, setServings] = useState("4");
+  const [cuisine, setCuisine] = useState("any");
   const [preferences, setPreferences] = useState("");
   const [recipe, setRecipe] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const handleCuisineChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setCuisine(event.target.value);
+  };
+
+  const handleServingsChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setServings(event.target.value);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,6 +75,7 @@ const RecipeForm = () => {
     try {
       const response = await fetchRecipe({
         ingredients: ingredients.split(",").map((ing) => ing.trim()),
+        servings,
         cuisine,
         preferences,
       });
@@ -34,15 +93,12 @@ const RecipeForm = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto dark:text-white">
-      <div>
-        <img src="logo.png" alt="Logo" className="mb-4 border-none rounded" />
-      </div>
+    <div className="flex flex-col items-center w-full min-h-screen max-w-xl pb-3 pl-3 pr-3 pt-6 mt-6 dark:text-white">
       <h1 className="text-2xl font-bold mb-4">
-        Generate a Recipe:{" "}
+        Are you looking for a recipe idea?{" "}
         <span className="text-2xl font-thin">
-          If you're looking for a recipe idea, add your ingredients, cuisine
-          type, and preferences below.
+          Just add your ingredients, number of servings, cuisine type, and
+          preferences below.
         </span>
       </h1>
 
@@ -51,20 +107,44 @@ const RecipeForm = () => {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        <label>Add Ingredients</label>
         <input
           type="text"
-          placeholder="Ingredients (comma separated)"
+          placeholder="Chicken thighs, lime, cilantro, garlic, avocado..."
           value={ingredients}
           onChange={(e) => setIngredients(e.target.value)}
           className="w-full p-2 border rounded"
         />
-        <input
-          type="text"
-          placeholder="Cuisine Type"
+        <label htmlFor="servings-select">Select a Serving Size</label>
+        <select
+          id="servings-select"
+          className="bg-gray-100 dark:bg-slate-600 dark:text-white w-full p-2 border rounded"
+          value={servings}
+          onChange={handleServingsChange}
+        >
+          <option value="">--Please choose a Serving Size--</option>
+          {servingsOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+
+        <label htmlFor="cuisine-select">Select a Cuisine</label>
+        <select
+          id="cuisine-select"
+          className="bg-gray-100 dark:bg-slate-600 dark:text-white w-full p-2 border rounded"
           value={cuisine}
-          onChange={(e) => setCuisine(e.target.value)}
-          className="w-full p-2 border rounded"
-        />
+          onChange={handleCuisineChange}
+        >
+          <option value="">--Please choose a Cuisine--</option>
+          {cuisineOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <label>Add Preferences</label>
         <input
           type="text"
           placeholder="Preferences (optional)"
@@ -72,7 +152,6 @@ const RecipeForm = () => {
           onChange={(e) => setPreferences(e.target.value)}
           className="w-full p-2 border rounded"
         />
-
         <button
           type="submit"
           className="w-full flex justify-center items-center bg-lime-500 hover:bg-lime-700 text-white p-2 rounded disabled:opacity-50"
@@ -100,7 +179,7 @@ const RecipeForm = () => {
               ></path>
             </svg>
           ) : (
-            "Generate Recipe"
+            "Generate My Recipe"
           )}
         </button>
       </form>
